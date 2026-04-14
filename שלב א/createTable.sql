@@ -1,16 +1,16 @@
 
 CREATE TABLE ROOMTYPE (
   RoomTypeID INT PRIMARY KEY,
-  TypeName VARCHAR2(50) NOT NULL,
+  TypeName VARCHAR(50) NOT NULL,
   BasePrice NUMERIC(10,2) NOT NULL CHECK (BasePrice > 0),
-  Description VARCHAR2(500),
-  BedType VARCHAR2(50)
+  Description VARCHAR(500),
+  BedType VARCHAR(50)
 );
 
 
 CREATE TABLE ROOMSTATUS (
   StatusID INT PRIMARY KEY,
-  StatusName VARCHAR2(20) NOT NULL UNIQUE
+  StatusName VARCHAR(20) NOT NULL UNIQUE
 );
 
 
@@ -19,7 +19,7 @@ CREATE TABLE ROOM (
   RoomNumber INT NOT NULL UNIQUE,
   Floor INT NOT NULL CHECK (Floor >= -1), 
   MaxOccupancy INT NOT NULL CHECK (MaxOccupancy > 0),
-  PhoneNumber VARCHAR2(20),
+  PhoneNumber VARCHAR(20),
   RoomTypeID INT NOT NULL,
   StatusID INT NOT NULL,
   CONSTRAINT fk_room_type FOREIGN KEY (RoomTypeID) REFERENCES ROOMTYPE(RoomTypeID),
@@ -29,8 +29,8 @@ CREATE TABLE ROOM (
 
 CREATE TABLE AMENITY (
   AmenityID INT PRIMARY KEY,
-  AmenityName VARCHAR2(50) NOT NULL,
-  AmenityCategory VARCHAR2(50)
+  AmenityName VARCHAR(50) NOT NULL,
+  AmenityCategory VARCHAR(50)
 );
 
 
@@ -38,9 +38,9 @@ CREATE TABLE ROOMMAINTENANCE (
   MaintenanceID INT PRIMARY KEY,
   StartDate DATE NOT NULL,
   EndDate DATE,
-  Description VARCHAR2(1000) NOT NULL,
+  Description VARCHAR(1000) NOT NULL,
   RepairCost NUMERIC(10,2) DEFAULT 0 CHECK (RepairCost >= 0),
-  MaintenanceStatus VARCHAR2(20) NOT NULL,
+  MaintenanceStatus VARCHAR(20) NOT NULL,
   RoomID INT NOT NULL,
   CONSTRAINT fk_maint_room FOREIGN KEY (RoomID) REFERENCES ROOM(RoomID),
   CONSTRAINT chk_maint_dates CHECK (EndDate >= StartDate OR EndDate IS NULL),
@@ -50,7 +50,7 @@ CREATE TABLE ROOMMAINTENANCE (
 
 CREATE TABLE SEASON (
   SeasonID INT PRIMARY KEY,
-  SeasonName VARCHAR2(50) NOT NULL,
+  SeasonName VARCHAR(50) NOT NULL,
   StartDate DATE NOT NULL,
   EndDate DATE NOT NULL,
   CONSTRAINT chk_season_dates CHECK (EndDate > StartDate)
@@ -59,7 +59,7 @@ CREATE TABLE SEASON (
 
 CREATE TABLE SPECIALOFFER (
   OfferID INT PRIMARY KEY,
-  OfferName VARCHAR2(50) NOT NULL,
+  OfferName VARCHAR(50) NOT NULL,
   DiscountPercentage NUMERIC(5,2) DEFAULT 0 CHECK (DiscountPercentage BETWEEN 0 AND 100)
 );
 
@@ -75,7 +75,6 @@ CREATE TABLE PRICERATE (
   CONSTRAINT fk_pr_roomtype FOREIGN KEY (RoomTypeID) REFERENCES ROOMTYPE(RoomTypeID)
 );
 
-//
 CREATE TABLE ROOMAMENITY (
   RoomID INT NOT NULL,
   AmenityID INT NOT NULL,
